@@ -1,6 +1,11 @@
+var iconImg = L.icon({
+    iconUrl: 'icon.png',
+    iconSize: [60, 75],
+    iconAnchor: [25, 16]
+});
 
-var mymap = L.map('issMap').setView([51.505, -0.09], 10);
-var marker = L.marker([51.5, -0.09]).addTo(mymap);
+var mymap = L.map('issMap').setView([51.505, -0.09], 13);
+var marker = L.marker([51.5, -0.09], {icon: iconImg}).addTo(mymap);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
