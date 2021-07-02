@@ -76,8 +76,9 @@ function _latLongInput() {
             longitude = data.location.lng;
             marker.setLatLng([latitude, longitude]);
             mymap.setView([latitude, longitude], 13);
+            return _context2.abrupt("return", data);
 
-          case 9:
+          case 10:
           case "end":
             return _context2.stop();
         }

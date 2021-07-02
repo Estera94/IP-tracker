@@ -29,6 +29,7 @@ async function latLongInput() {
     let longitude =  data.location.lng
     marker.setLatLng([latitude, longitude])
     mymap.setView([latitude, longitude], 13)
+    return data
 }
 
 async function displayData() {
