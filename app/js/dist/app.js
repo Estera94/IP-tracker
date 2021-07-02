@@ -4,8 +4,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var mymap = L.map('issMap').setView([51.505, -0.09], 10);
-var marker = L.marker([51.5, -0.09]).addTo(mymap);
+var iconImg = L.icon({
+  iconUrl: 'icon.png',
+  iconSize: [60, 75],
+  iconAnchor: [25, 16]
+});
+var mymap = L.map('issMap').setView([51.505, -0.09], 3);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
   maxZoom: 18,
@@ -27,7 +31,7 @@ function _getApiUrl() {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return fetch("https://geo.ipify.org/api/v1?apiKey=at_tdu908rqI4OBlxCEVWNgbWcnMLbnt&ipAddress=".concat(ipAddress));
+            return fetch("https://geo.ipify.org/api/v1?apiKey=at_N7bI2kkvX3c6QIv1J3m6dgvIbJugA&ipAddress=".concat(ipAddress));
 
           case 2:
             response = _context.sent;
@@ -48,27 +52,57 @@ function _getApiUrl() {
   return _getApiUrl.apply(this, arguments);
 }
 
-function injectingHtml() {
-  return _injectingHtml.apply(this, arguments);
+function latLongInput() {
+  return _latLongInput.apply(this, arguments);
 }
 
-function _injectingHtml() {
-  _injectingHtml = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-    var input, data, latitude, longitude, source, template, temp, mainContent, target;
+function _latLongInput() {
+  _latLongInput = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+    var marker, input, data, latitude, longitude;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
+            marker = L.marker([0, 0], {
+              icon: iconImg
+            }).addTo(mymap);
             input = document.querySelector(".form-control").value;
-            _context2.next = 3;
+            _context2.next = 4;
             return getApiUrl(input);
 
-          case 3:
+          case 4:
             data = _context2.sent;
             latitude = data.location.lat;
             longitude = data.location.lng;
             marker.setLatLng([latitude, longitude]);
-            mymap.setView([latitude, longitude]);
+            mymap.setView([latitude, longitude], 13);
+
+          case 9:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _latLongInput.apply(this, arguments);
+}
+
+function displayData() {
+  return _displayData.apply(this, arguments);
+}
+
+function _displayData() {
+  _displayData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    var data, source, template, temp, mainContent, target;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.next = 2;
+            return latLongInput();
+
+          case 2:
+            data = _context3.sent;
             source = document.querySelector('#dataTemplate').innerHTML;
             template = Handlebars.compile(source);
             temp = document.querySelector('#temp');
@@ -83,18 +117,18 @@ function _injectingHtml() {
             target = document.querySelector('#content');
             target.innerHTML += template(data);
 
-          case 15:
+          case 10:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2);
+    }, _callee3);
   }));
-  return _injectingHtml.apply(this, arguments);
+  return _displayData.apply(this, arguments);
 }
 
 document.querySelector('.submit').addEventListener('click', function (e) {
   e.preventDefault();
-  injectingHtml();
+  displayData();
 });
 //# sourceMappingURL=app.js.map

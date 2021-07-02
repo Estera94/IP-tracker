@@ -21,7 +21,7 @@ async function getApiUrl(ipAddress) {
     return data
 }
 
-async function injectingHtml() {
+async function latLongInput() {
     let marker = L.marker([0, 0], {icon: iconImg}).addTo(mymap);
     let input = document.querySelector(".form-control").value;
     let data = await getApiUrl(input)
@@ -29,6 +29,10 @@ async function injectingHtml() {
     let longitude =  data.location.lng
     marker.setLatLng([latitude, longitude])
     mymap.setView([latitude, longitude], 13)
+}
+
+async function displayData() {
+    let data = await latLongInput()
     const source = document.querySelector('#dataTemplate').innerHTML
     const template = Handlebars.compile(source)
     const temp = document.querySelector('#temp')
@@ -44,5 +48,5 @@ async function injectingHtml() {
 
 document.querySelector('.submit').addEventListener('click', (e) => {
     e.preventDefault()
-    injectingHtml()
+    displayData()
 })
